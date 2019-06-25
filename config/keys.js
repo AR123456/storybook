@@ -1,5 +1,5 @@
 module.exports = {
   mongoURI: "mongodb://CHANGEME",
   googleClientID: "CHANGEME",
-  googleClientSecret: "CHANGEME"
+  googleClientSecret: "c"
 };
