@@ -1,17 +1,13 @@
-// in the model require mongoose and schema
-
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Create Schema
-// create the variable and set to new Schema  object with type and  if requried is true
-
 const IdeaSchema = new Schema({
-  title: {
+  title:{
     type: String,
     required: true
   },
-  details: {
+  details:{
     type: String,
     required: true
   },
@@ -20,5 +16,5 @@ const IdeaSchema = new Schema({
     default: Date.now
   }
 });
-// set up the export
-mongoose.model("ideas", IdeaSchema);
+
+mongoose.model('ideas', IdeaSchema);
