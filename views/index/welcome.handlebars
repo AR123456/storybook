@@ -4,3 +4,7 @@
 <p>Welcome to StoryBooks </p>
 <p>Post storys post for all or make a private post </p>
 <a class="btn red darken-1" href="/auth/google"><i class="fa ga-google left">Login With Google </i></a>
+{{#if user}}
+{{else}}
+<a class="btn red darken-1" href="/auth/google"><i class="fa fa-google left"></i> Login With Google</a>
+{{/if}}
