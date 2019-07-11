@@ -7,7 +7,6 @@ const { ensureAuthenticated, ensureGuest } = require("../helpers/auth");
 
 // Stories Index
 router.get("/", (req, res) => {
-  // logic to only get public stories
   Story.find({ status: "public" })
     .populate("user")
     .then(stories => {
@@ -16,21 +15,33 @@ router.get("/", (req, res) => {
       });
     });
 });
+
 // Show Single Story
 router.get("/show/:id", (req, res) => {
   Story.findOne({
     _id: req.params.id
   })
-    // .populate("user")
+    .populate("user")
     .then(story => {
       res.render("stories/show", {
         story: story
       });
     });
 });
+
 // Add Story Form
 router.get("/add", ensureAuthenticated, (req, res) => {
   res.render("stories/add");
+});
+// Edit Story Form
+router.get("/edit/:id", ensureAuthenticated, (req, res) => {
+  Story.findOne({
+    _id: req.params.id
+  }).then(story => {
+    res.render("stories/edit", {
+      story: story
+    });
+  });
 });
 
 // Process Add Story
