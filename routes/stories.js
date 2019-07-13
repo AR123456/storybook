@@ -9,6 +9,7 @@ const { ensureAuthenticated, ensureGuest } = require("../helpers/auth");
 router.get("/", (req, res) => {
   Story.find({ status: "public" })
     .populate("user")
+    .sort({ date: "desc" })
     .populate("comments.commentUser")
     .then(stories => {
       res.render("stories/index", {
@@ -40,9 +41,14 @@ router.get("/edit/:id", ensureAuthenticated, (req, res) => {
   Story.findOne({
     _id: req.params.id
   }).then(story => {
-    res.render("stories/edit", {
-      story: story
-    });
+    // prevents a user from editing another users story
+    if (story.user != req.user.id) {
+      res.redirect("/stories");
+    } else {
+      res.render("stories/edit", {
+        story: story
+      });
+    }
   });
 });
 
