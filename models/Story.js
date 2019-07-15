@@ -1,47 +1,53 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // Create Shema
 const StorySchema = new Schema({
-  title:{
-    type:String,
+  title: {
+    type: String,
     required: true
   },
-  body:{
+  body: {
     type: String,
     required: true
   },
   status: {
     type: String,
-    default:'public'
+    default: "public"
   },
   allowComments: {
     type: Boolean,
-    default:true
+    default: true
   },
-  comments: [{
-    commentBody: {
-      type: String,
-      required: true
-    },
-    commentDate:{
-      type: Date,
-      default: Date.now
-    },
-    commentUser:{
-      type: Schema.Types.ObjectId,
-      ref:'users'
+  /// bracket cause its an array of objects
+  comments: [
+    {
+      commentBody: {
+        type: String,
+        required: true
+      },
+      commentDate: {
+        type: Date,
+        default: Date.now
+      },
+      commentUser: {
+        // similar to a relation in the relational db world
+        type: Schema.Types.ObjectId,
+        // the model that is being refrenced
+        ref: "users"
+      }
     }
-  }],
-  user:{
+  ],
+  // the user associated with the storie
+  user: {
     type: Schema.Types.ObjectId,
-    ref:'users'
+    ref: "users"
   },
-  date:{
+  date: {
     type: Date,
     default: Date.now
   }
 });
 
-// Create collection and add schema
-mongoose.model('stories', StorySchema, 'stories');
+// Create collection and add schema - the second stories takes care of pluarl of story
+mongoose.model("stories", StorySchema, "stories");
