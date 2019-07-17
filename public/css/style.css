@@ -8,9 +8,10 @@ main {
   flex: 1 0 auto;
 }
 
-.nav-wrapper .fa-bars {
-  font-size: 25px;
+.nav-wrapper .fa-bars{
+  font-size:25px;
 }
-footer {
-  margin-top: 20px;
+
+footer{
+  margin-top:20px;
 }
