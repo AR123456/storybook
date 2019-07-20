@@ -17,6 +17,14 @@ router.get("/login", (req, res) => {
 router.get("/register", (req, res) => {
   res.render("users/register");
 });
+
+router.get("/verify", (req, res) => {
+  if (req.user) {
+    console.log(req.user);
+  } else {
+    console.log("Not Auth");
+  }
+});
 // //////////////////////////login form Post //////////////////////
 router.post("/login", (req, res, next) => {
   //passport stuff here
@@ -68,7 +76,7 @@ router.post("/register", (req, res) => {
             newUser
               .save()
               .then(user => {
-                // req.flash("success_msg", "You are registered and can log in");
+                req.flash("success_msg", "You are registered and can log in");
                 res.redirect("/users/login");
               })
               .catch(err => {
@@ -84,7 +92,8 @@ router.post("/register", (req, res) => {
 //logout user
 router.get("/logout", (req, res) => {
   req.logOut();
-  // req.flash("success_msg", "You are logged out");
+  // TODO this is not flashing
+  req.flash("success_msg", "You are logged out");
   res.redirect("/users/login");
 });
 
