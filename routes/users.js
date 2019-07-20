@@ -23,8 +23,8 @@ router.post("/login", (req, res, next) => {
 
   passport.authenticate("local", {
     successRedirect: "/dashboard",
-    failureRedirect: "/"
-    // failureFlash: true
+    failureRedirect: "/users/login",
+    failureFlash: true
   })(req, res, next);
 });
 
@@ -53,7 +53,7 @@ router.post("/register", (req, res) => {
   } else {
     User.findOne({ email: req.body.email }).then(user => {
       if (user) {
-        req.flash("error_msg", "Email is already registered");
+        // req.flash("error_msg", "Email is already registered");
         res.redirect("/users/login");
       } else {
         const newUser = new User({
@@ -69,7 +69,7 @@ router.post("/register", (req, res) => {
               .save()
               .then(user => {
                 // req.flash("success_msg", "You are registered and can log in");
-                res.redirect("/users/login");
+                res.redirect("/users/register");
               })
               .catch(err => {
                 console.log(err);
@@ -89,30 +89,3 @@ router.get("/logout", (req, res) => {
 });
 
 module.exports = router;
-
-//****************************************************************************************************** */
-// const express = require('express');
-// const router = express.Router();
-// const passport = require('passport');
-
-// router.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}));
-
-// router.get('/google/callback',
-//   passport.authenticate('google', { failureRedirect: '/' }),(req, res) => {
-//     res.redirect('/dashboard');
-//   });
-
-// router.get('/verify', (req, res) => {
-//   if(req.user){
-//     console.log(req.user);
-//   } else {
-//     console.log('Not Auth');
-//   }
-// });
-
-// router.get('/logout', (req, res) => {
-//  req.logout();
-//  res.redirect('/');
-// });
-
-// module.exports = router;
