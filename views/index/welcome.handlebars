@@ -1,9 +1,8 @@
 <h1>Welcome</h1>
-<p>Welcome to StoryBooks 1.0.0</p>
-<p>Post stories from the best and worst of your life and choose for them to be read by the world or completley private
-  as your own personal diary</p>
-{{#if user}}
-{{else}}
-<a class="btn red darken-1" href="/users/login"><i class="fa fa-google left"></i> Login</a>
-<a class="btn red darken-1" href="/users/register"><i class="fa fa-google left"></i> Register</a>
-{{/if}}
+<p>Welcome to Spin The Globe Recipe Finder <p>
+    <p>Post a recipe to the community or add one to your private collection</p>
+    {{#if user}}
+    {{else}}
+    <a class="btn" href="/users/login" class="nav-link"><i class="fas fa-globe"></i> Login</a>
+    <a class="btn" href="/users/register" class="nav-link"><i class="fas fa-scroll"></i> Register</a>
+    {{/if}}
