@@ -1,32 +1,38 @@
-<nav class="grey darken-3">
+<nav class="navbar navbar-expand-sm navbar-dark mb-3">
   <div class="container">
-    <div class="nav-wrapper">
-      <a href="/" class="brand-logo center">StoryBooks</a>
-      <a href="#" data-activates="main-menu" class="button-collapse show-on-large"><i class="fa fa-bars"></i></a>
-      <!-- RIGHT NAV -->
-      <ul class="right hide-on-small-only">
+    <a href="#" class="navbar-brand">StoryBooks</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <a href=""><span class="navbar-toggler-icon"></span></a>
+    </button>
+    {{!-- <a href="#" data-activates="main-menu" class="navbar-toggler-icon"><i class="fa fa-bars"></i></a> --}}
+    <!-- RIGHT NAV -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
         {{#if user}}
-        <li><a href="/dashboard">Welcome {{user.firstName}}</a></li>
-        <li><a href="/auth/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+        <li><a href="/dashboard" class="nav-link">Welcome {{user.name}}</a> </li>
+
+        <li><a href="/auth/logout" class="nav-link"><i class="fas fa-dice-d20"></i> Logout</a></li>
         {{else}}
-        <li><a href="/stories"><i class="fa fa-book"></i> Public Stories</a></li>
+        <li><a href="/stories" class="nav-link"><i class="fas fa-hotdog"></i> Public Stories</a></li>
         {{/if}}
       </ul>
+
       <!-- SIDE MENU -->
-      <ul class="side-nav" id="main-menu">
+      <ul class="navbar-nav ml-auto">
         {{#if user}}
         {{else}}
         <li>
-          <a class="btn red darken-1" href="/users/login"><i class="fa fa-google left"></i> Login</a>
-          <a class="btn red darken-1" href="/users/register"><i class="fa fa-google left"></i> Register</a>
+          <a class="btn" href="/users/login" class="nav-link"><i class="fas fa-globe"></i> Login</a>
+          <a class="btn" href="/users/register" class="nav-link"><i class="fas fa-scroll"></i> Register</a>
         </li>
         {{/if}}
-        <li><a href="/stories"><i class="fa fa-book"></i> Public Stories</a></li>
+        <li><a href="/stories" class="nav-link"><i class="fas fa-hotdog"></i> Public Stories</a></li>
         {{#if user}}
-        <li class="divider"></li>
-        <li><a href="/dashboard"><i class="fa fa-cog"></i> Dashboard</a></li>
-        <li><a href="/stories/my"><i class="fa fa-user"></i> My Stories</a></li>
-        <li><a href="/auth/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+        <li class="nav-item"></li>
+        <li><a href="/dashboard" class="nav-link"><i class="fas fa-pepper-hot"></i> Dashboard</a></li>
+        <li><a href="/stories/my" class="nav-link"><i class="fas fa-user-alt"></i> My Stories</a></li>
+        <li><a href="/auth/logout" class="nav-link"><i class="fas fa-dice-d20"></i> Logout</a></li>
         {{/if}}
       </ul>
     </div>
