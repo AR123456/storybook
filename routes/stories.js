@@ -96,7 +96,7 @@ router.post("/", (req, res) => {
   } else {
     allowComments = false;
   }
-
+  // need body parserr in app.js for this
   const newStory = {
     title: req.body.title,
     body: req.body.body,
@@ -106,7 +106,9 @@ router.post("/", (req, res) => {
   };
 
   // Create Story
-  new Story(newStory).save().then(story => {
+  new Story(newStory).save()
+  // take care of the promise
+  .then(story => {
     res.redirect(`/stories/show/${story.id}`);
   });
 });

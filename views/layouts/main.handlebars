@@ -49,17 +49,19 @@
   {{!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> --}}
   {{!-- leave this  --}}
   <script src="https://cdn.ckeditor.com/4.7.3/standard/ckeditor.js"></script>
+  {{!-- This implements CK editor in the text box with an name of body , but not the full editor whihc is limited by plugins  --}}
+  <script>
 
-  {{!-- <script>
     $(document).ready(() => {
       $('.button-collapse').sideNav();
       $('select').material_select();
     });
 
     CKEDITOR.replace('body', {
+
       plugins: 'wysiwygarea,toolbar,basicstyles,link'
     });
-  </script> --}}
+  </script>
 </body>
 
 </html>
