@@ -20,13 +20,9 @@ footer {
   height: 120px;
 }
 
-.dash-status {
-  text-transform: capitalize;
-}
 
-#delete-form {
-  display: inline;
-} */
+
+ */
 .navbar {
   background-color: grey;
 }
@@ -38,4 +34,13 @@ footer {
 }
 footer {
   background-color: grey;
+}
+.card-text {
+  height: 120px;
+}
+.dash-status {
+  text-transform: capitalize;
+}
+#delete-form {
+  display: inline;
 }
