@@ -1,6 +1,7 @@
 <h1>Edit Story</h1>
 
 <form action="/stories/{{story.id}}?_method=PUT" method="post" class="col s12">
+  {{!-- need the hidden input feild with the methond overide _method  --}}
   <input type="hidden" name="_method" value="PUT">
   <div class="row">
     <div class="input-field">

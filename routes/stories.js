@@ -117,28 +117,36 @@ router.post("/", (req, res) => {
 });
 
 // Edit Form Process
+// finding the story
 router.put("/:id", (req, res) => {
+  // just fining one - by matching the story ID to the request params id from the url
   Story.findOne({
     _id: req.params.id
-  }).then(story => {
-    let allowComments;
+  })
+    // get the story back then
+    .then(story => {
+      // decide if allow comments is going to be true or false
+      let allowComments;
 
-    if (req.body.allowComments) {
-      allowComments = true;
-    } else {
-      allowComments = false;
-    }
+      if (req.body.allowComments) {
+        allowComments = true;
+      } else {
+        allowComments = false;
+      }
 
-    // New values
-    story.title = req.body.title;
-    story.body = req.body.body;
-    story.status = req.body.status;
-    story.allowComments = allowComments;
-
-    story.save().then(story => {
-      res.redirect("/dashboard");
+      // Set New values coming in from the form
+      story.title = req.body.title;
+      story.body = req.body.body;
+      story.status = req.body.status;
+      story.allowComments = allowComments;
+      // now call the save on the new values
+      story
+        .save()
+        // the new updaed story then redirect to the dashboard
+        .then(story => {
+          res.redirect("/dashboard");
+        });
     });
-  });
 });
 
 // Delete Story
