@@ -1,7 +1,6 @@
 const express = require("express");
 const path = require("path");
 const exphbs = require("express-handlebars");
-// for put and del from html forms
 const methodOverride = require("method-override");
 const flash = require("connect-flash");
 const cookieParser = require("cookie-parser");
@@ -46,7 +45,7 @@ mongoose
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Handlebars Middleware - with healpers added
+// Handlebars Middleware
 app.engine(
   "handlebars",
   exphbs({
@@ -65,7 +64,7 @@ app.set("view engine", "handlebars");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Method override middleware - for put and del  from simple html forms
+// Method override middleware
 app.use(methodOverride("_method"));
 
 app.use(cookieParser());
