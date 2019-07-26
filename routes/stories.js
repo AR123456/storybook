@@ -10,6 +10,7 @@ router.get("/", (req, res) => {
   Story.find({ status: "public" })
     // bring in the feilds from user collection
     .populate("user")
+    // sorting by date desending -
     .sort({ date: "desc" })
     .then(stories => {
       // reder the view and pass the stories in
@@ -25,6 +26,7 @@ router.get("/show/:id", (req, res) => {
     _id: req.params.id
   })
     .populate("user")
+    // so that user info can be accessed for commenter
     .populate("comments.commentUser")
     .then(story => {
       if (story.status == "public") {
@@ -117,32 +119,40 @@ router.post("/", (req, res) => {
 });
 
 // Edit Form Process
+// finding the story
 router.put("/:id", (req, res) => {
+  // just fining one - by matching the story ID to the request params id from the url
   Story.findOne({
     _id: req.params.id
-  }).then(story => {
-    let allowComments;
+  })
+    // get the story back then
+    .then(story => {
+      // decide if allow comments is going to be true or false
+      let allowComments;
 
-    if (req.body.allowComments) {
-      allowComments = true;
-    } else {
-      allowComments = false;
-    }
+      if (req.body.allowComments) {
+        allowComments = true;
+      } else {
+        allowComments = false;
+      }
 
-    // New values
-    story.title = req.body.title;
-    story.body = req.body.body;
-    story.status = req.body.status;
-    story.allowComments = allowComments;
-
-    story.save().then(story => {
-      res.redirect("/dashboard");
+      // Set New values coming in from the form
+      story.title = req.body.title;
+      story.body = req.body.body;
+      story.status = req.body.status;
+      story.allowComments = allowComments;
+      // now call the save on the new values
+      story
+        .save()
+        // the new updaed story then redirect to the dashboard
+        .then(story => {
+          res.redirect("/dashboard");
+        });
     });
-  });
 });
 
 // Delete Story
-router.delete("/:id", (req, res) => {
+router.delete("/:id", ensureAuthenticated, (req, res) => {
   Story.remove({ _id: req.params.id }).then(() => {
     res.redirect("/dashboard");
   });
@@ -158,7 +168,7 @@ router.post("/comment/:id", (req, res) => {
       commentUser: req.user.id
     };
 
-    // Add to comments array
+    // Add to comments array - unshift adds to the beging of the comments array
     story.comments.unshift(newComment);
 
     story.save().then(story => {

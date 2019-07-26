@@ -23,7 +23,7 @@
       <td><span class="dash-status">{{status}}</span></td>
       <td>
         <a class="btn btn-outline-primary btn-sm" href="/stories/edit/{{id}}"><i class="fas fa-pencil-alt"></i> Edit</a>
-
+        {{!-- method overide to take care of delete from the form  --}}
         <form action="/stories/{{id}}?_method=DELETE" method="post" id="delete-form">
           <input type="hidden" name="_method" value="DELETE">
 

@@ -5,20 +5,19 @@
     <div class="card">
       <div class="card-body">
         {{#if user}}
+        {{!-- while in this loop user is local to inside the looop so  using ../ to get the global instance of user ID which is the one logged in  --}}
         {{{editIcon user.id ../user.id id}}}
         {{/if}}
       </div>
       <div class="card-title">
         <h5>{{title}}</h5>
         <p class="card-text">{{stripTags (truncate body 150)}}</p>
-        <br>
-        <div class="chip">
-          <img src="{{user.image}}">
-          <a href="/stories/user/{{user.id}}">{{user.firstName}} {{user.lastName}}</a>
+        <div>
+          <a href="/stories/user/{{user.id}}">Recipe Added By {{user.name}} </a>
         </div>
       </div>
       <div class="card-action center-align">
-        <a class=" btn btn-outline-primary btn-sm" href="/stories/show/{{id}}">See More</a>
+        <a class=" btn btn-outline-primary btn-sm" href="/stories/show/{{id}}">See Recipe</a>
       </div>
     </div>
   </div>
