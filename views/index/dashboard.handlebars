@@ -1,13 +1,10 @@
 <div class="jumbotron">
-  <h1>Welcome {{user.name}}</h1>
-  <h4>Your Recipes</h4>
-  {{#if user}}
-  {{> _add-btn}}
-  {{/if}}
+  <h1>Welcome {{user.firstName}}</h1>
+  <h4>Your Stories</h4>
 </div>
 {{#if stories}}
-<table class="table table-hover">
-  <thead class="thead-light">
+<table class="striped">
+  <thead>
     <tr>
       <th>Title</th>
       <th>Date</th>
@@ -22,12 +19,11 @@
       <td>{{formatDate data 'MMMM do YYYY'}}</td>
       <td><span class="dash-status">{{status}}</span></td>
       <td>
-        <a class="btn btn-outline-primary btn-sm" href="/stories/edit/{{id}}"><i class="fas fa-pencil-alt"></i> Edit</a>
-        {{!-- method overide to take care of delete from the form  --}}
+        <a class="btn left-align" href="/stories/edit/{{id}}"><i class="fa fa-pencil"></i> Edit</a>
+
         <form action="/stories/{{id}}?_method=DELETE" method="post" id="delete-form">
           <input type="hidden" name="_method" value="DELETE">
-
-          <button type="submit" class="btn btn-outline-primary btn-sm"><i class="far fa-trash-alt"></i> Delete</button>
+          <button type="submit" class="btn red"><i class="fa fa-remove"></i> Delete</button>
         </form>
       </td>
     </tr>
@@ -35,5 +31,5 @@
   </tbody>
 </table>
 {{else}}
-<p>You have added any recipes yet</p>
+<p>You have not created any stories yet</p>
 {{/if}}

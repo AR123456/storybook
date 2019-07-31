@@ -1,4 +1,4 @@
-/* body {
+body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
@@ -20,27 +20,10 @@ footer {
   height: 120px;
 }
 
-
-
- */
-.navbar {
-  background-color: grey;
-}
-/* #navbarNav {
-  background-color: rgb(118, 118, 177);
-} */
-.navbar-nav {
-  background-color: rgb(162, 196, 162);
-}
-footer {
-  background-color: grey;
-}
-.card-text {
-  height: 120px;
-}
 .dash-status {
   text-transform: capitalize;
 }
+
 #delete-form {
   display: inline;
 }
