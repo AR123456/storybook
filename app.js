@@ -2,12 +2,14 @@ const express = require("express");
 const path = require("path");
 const exphbs = require("express-handlebars");
 const methodOverride = require("method-override");
-// const flash = require("connect-flash");
+const flash = require("connect-flash");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const mongoose = require("mongoose");
+
+const app = express();
 // Load Models
 require("./models/User");
 require("./models/Story");
@@ -29,24 +31,21 @@ const {
   editIcon
 } = require("./helpers/hbs");
 
-// Map global promises
+// Map global promises- this takes care of the promise
 mongoose.Promise = global.Promise;
-// Mongoose Connect
+// Mongoose Connect - bring in the keys file stored in config in var mongoURI
 mongoose
   .connect(keys.mongoURI, {
+    // this keeps the depricated error from popping up
     useMongoClient: true
   })
+  // must have .then and catch
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
-
-const app = express();
 
 // Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-// MEthod Override Middelware
-app.use(methodOverride("_method"));
 
 // Handlebars Middleware
 app.engine(
@@ -63,30 +62,37 @@ app.engine(
   })
 );
 app.set("view engine", "handlebars");
+// Body parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// Method override middleware
+app.use(methodOverride("_method"));
 
 app.use(cookieParser());
+// Express session midleware-- make sure this is above the passport middleware
 app.use(
   session({
+    // secret can be anything
     secret: "secret",
-    resave: false,
-    saveUninitialized: false
+    resave: true,
+    saveUninitialized: true
   })
 );
-
 // Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
-// // for alters messages
-// app.use(flash());
-// // Global variables- for when flash is implemented
-// app.use(function(req, res, next) {
-//   res.locals.success_msg = req.flash("success_msg");
-//   res.locals.error_msg = req.flash("error_msg");
-//   res.locals.error = req.flash("error");
-//   res.locals.user = req.user || null;
-//   next();
-// });
-// Set global vars
+// for alters messages
+app.use(flash());
+// Global variables- for when flash is implemented
+app.use(function(req, res, next) {
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.error_msg = req.flash("error_msg");
+  res.locals.error = req.flash("error");
+  res.locals.user = req.user || null;
+  next();
+});
+// Set global user variable so that it is in app.js vars
 app.use((req, res, next) => {
   res.locals.user = req.user || null;
   next();

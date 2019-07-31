@@ -53,7 +53,7 @@ router.post("/register", (req, res) => {
   } else {
     User.findOne({ email: req.body.email }).then(user => {
       if (user) {
-        // req.flash("error_msg", "Email is already registered");
+        req.flash("error_msg", "Email is already registered");
         res.redirect("/users/login");
       } else {
         const newUser = new User({
@@ -84,7 +84,7 @@ router.post("/register", (req, res) => {
 //logout user
 router.get("/logout", (req, res) => {
   req.logOut();
-  // req.flash("success_msg", "You are logged out");
+  req.flash("success_msg", "You are logged out");
   res.redirect("/users/login");
 });
 
