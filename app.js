@@ -31,15 +31,13 @@ const {
   editIcon
 } = require("./helpers/hbs");
 
-// Map global promises- this takes care of the promise
+// Map global promises
 mongoose.Promise = global.Promise;
-// Mongoose Connect - bring in the keys file stored in config in var mongoURI
+// Mongoose Connect
 mongoose
   .connect(keys.mongoURI, {
-    // this keeps the depricated error from popping up
     useMongoClient: true
   })
-  // must have .then and catch
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
 

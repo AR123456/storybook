@@ -1,4 +1,4 @@
-body {
+/* body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
@@ -26,4 +26,13 @@ footer {
 
 #delete-form {
   display: inline;
+} */
+.navbar {
+  background-color: grey;
+}
+/* #navbarNav {
+  background-color: rgb(118, 118, 177);
+} */
+.navbar-nav {
+  background-color: rgb(162, 196, 162);
 }
