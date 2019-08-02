@@ -1,47 +1,52 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // Create Shema
+//TODO wiht implementation of spin recipe this will be the recipe model
 const StorySchema = new Schema({
-  title:{
-    type:String,
+  title: {
+    type: String,
     required: true
   },
-  body:{
+  body: {
     type: String,
     required: true
   },
   status: {
     type: String,
-    default:'public'
+    default: "public"
   },
   allowComments: {
     type: Boolean,
-    default:true
+    default: true
   },
-  comments: [{
-    commentBody: {
-      type: String,
-      required: true
-    },
-    commentDate:{
-      type: Date,
-      default: Date.now
-    },
-    commentUser:{
-      type: Schema.Types.ObjectId,
-      ref:'users'
+  // this is an array of objects
+  comments: [
+    {
+      commentBody: {
+        type: String,
+        required: true
+      },
+      commentDate: {
+        type: Date,
+        default: Date.now
+      },
+      commentUser: {
+        type: Schema.Types.ObjectId,
+        ref: "users"
+      }
     }
-  }],
-  user:{
+  ],
+  // The user associated with the recipe / story
+  user: {
     type: Schema.Types.ObjectId,
-    ref:'users'
+    ref: "users"
   },
-  date:{
+  date: {
     type: Date,
     default: Date.now
   }
 });
 
-// Create collection and add schema
-mongoose.model('stories', StorySchema, 'stories');
+// Create collection and add schema-  specifying ies preventsy the default being storys
+mongoose.model("stories", StorySchema, "stories");
