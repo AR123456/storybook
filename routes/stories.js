@@ -5,12 +5,14 @@ const Story = mongoose.model("stories");
 const User = mongoose.model("users");
 const { ensureAuthenticated, ensureGuest } = require("../helpers/auth");
 
-// Stories Index
+// Stories Index-  find only things with a status of public
 router.get("/", (req, res) => {
   Story.find({ status: "public" })
+    // bring in the feilds from user collection
     .populate("user")
     .sort({ date: "desc" })
     .then(stories => {
+      // reder the view and pass the stories in
       res.render("stories/index", {
         stories: stories
       });
@@ -106,11 +108,12 @@ router.post("/", (req, res) => {
   };
 
   // Create Story
-  new Story(newStory).save()
-  // take care of the promise
-  .then(story => {
-    res.redirect(`/stories/show/${story.id}`);
-  });
+  new Story(newStory)
+    .save()
+    // take care of the promise
+    .then(story => {
+      res.redirect(`/stories/show/${story.id}`);
+    });
 });
 
 // Edit Form Process
