@@ -29,11 +29,11 @@ module.exports = {
         ' selected="selected"$&'
       );
   },
-  // refactor this to show the image of the reicpes
+
   editIcon: function(storyUser, loggedUser, storyId, floating = true) {
     if (storyUser == loggedUser) {
       if (floating) {
-        return `<a href="/stories/edit/${storyId}" class="btn btn-primary"><i class="fas fa-pen-alt"></i></a>`;
+        return `<a href="/stories/edit/${storyId}" class="btn btn-outline-primary btn-sm"><i class="fas fa-pen-alt"></i></a>`;
       } else {
         return `<a href="/stories/edit/${storyId}"><i class="fas fa-pen-alt"></i></a>`;
       }
