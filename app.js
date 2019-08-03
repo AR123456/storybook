@@ -81,7 +81,7 @@ app.use(
 // Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
-// for alters messages
+// for alterts messages
 app.use(flash());
 // Global variables- for when flash is implemented
 app.use(function(req, res, next) {
@@ -91,7 +91,7 @@ app.use(function(req, res, next) {
   res.locals.user = req.user || null;
   next();
 });
-// Set global user variable so that it is in app.js vars
+// Set global user variable so that it is in app.js vars can use to decide which stories to show user
 app.use((req, res, next) => {
   res.locals.user = req.user || null;
   next();

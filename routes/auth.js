@@ -20,6 +20,7 @@ router.get("/register", (req, res) => {
 
 router.get("/verify", (req, res) => {
   if (req.user) {
+    // req.user has user id in  it for comparison
     console.log(req.user);
   } else {
     console.log("Not Auth");

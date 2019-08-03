@@ -1,40 +1,43 @@
-/* body {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  /* background: rgb(32, 137, 236); */
+  background: #000204;
+  font-family: sans-serif;
+  color: white;
 }
-
-main {
-  flex: 1 0 auto;
+.jumbotron {
+  background: #000204;
+  background: #000204;
+  -webkit-filter: drop-shadow(0 0 0.95rem white);
+  filter: drop-shadow(0 0 0.95rem white);
+  font-family: sans-serif;
+  color: white;
 }
-
-.nav-wrapper .fa-bars {
-  font-size: 25px;
+.table {
+  background: #000204;
+  -webkit-filter: drop-shadow(0 0 0.95rem white);
+  filter: drop-shadow(0 0 0.95rem white);
 }
-
-footer {
-  margin-top: 20px;
-}
-
-.story-text {
-  height: 120px;
-}
-
-
-
- */
 .navbar {
-  background-color: grey;
+  background: #000204;
+  color: white;
 }
-/* #navbarNav {
-  background-color: rgb(118, 118, 177);
-} */
+.nav-link {
+  color: white;
+}
+.card {
+  background: #000204;
+  -webkit-filter: drop-shadow(0 0 0.95rem white);
+  filter: drop-shadow(0 0 0.95rem white);
+  color: white;
+}
 .navbar-nav {
-  background-color: rgb(162, 196, 162);
+  background-color: #57bb86;
+  color: white;
 }
-footer {
-  background-color: grey;
-}
+
 .card-text {
   height: 120px;
 }
@@ -44,3 +47,23 @@ footer {
 #delete-form {
   display: inline;
 }
+footer {
+  margin-top: 20px;
+  background: #000204;
+}
+.btn {
+  background-color: #57bb86;
+  color: white;
+}
+button {
+  background-color: #57bb86;
+  color: white;
+}
+a {
+  color: white;
+  background-color: #57bb86;
+}
+
+/* green color is #57BB86 */
+/* black color is #000204 */
+/* pink color is #ff3796 */
