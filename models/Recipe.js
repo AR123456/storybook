@@ -4,18 +4,55 @@ const Schema = mongoose.Schema;
 // Create Shema
 //TODO wiht implementation of spin recipe this will be the recipe model
 const RecipeSchema = new Schema({
-  title: {
+  public: {
     type: String,
-    required: true
+    default: "public"
   },
+  searchTerm: [
+    {
+      type: String,
+      // required: true,
+      maxlength: 200
+    }
+  ],
+  userSearch: [
+    {
+      type: String,
+      maxlength: 200
+    }
+  ],
+  url: {
+    type: String,
+    trim: true
+    // why is this unique not working.........
+    // unique: true
+    // required: "URL is required"
+  },
+  label: {
+    type: String,
+    trim: true
+    // required: "Title is required"
+  },
+  image: {
+    type: String,
+    trim: true
+  },
+  ingredients: {
+    type: String,
+    trim: true
+  },
+  directions: {
+    type: String
+  },
+  nutrition: {
+    type: String
+  },
+
   body: {
     type: String,
     required: true
   },
-  status: {
-    type: String,
-    default: "public"
-  },
+
   allowComments: {
     type: Boolean,
     default: true
@@ -24,8 +61,8 @@ const RecipeSchema = new Schema({
   comments: [
     {
       commentBody: {
-        type: String,
-        required: true
+        type: String
+        // required: true
       },
       commentDate: {
         type: Date,

@@ -1,10 +1,10 @@
 <div class="col s-12">
-  <h3>{{recipe.title}}
+  <h3>{{recipe.label}}
     <small>{{{editIcon recipe.user.id user.id recipe.id false}}}</small>
   </h3>
   <div class="card recipe">
     <div class="card-content">
-      <span class="card-title">{{formatDate recipe.date 'MMMM Do YYYY'}}</span>
+      <span class="card-label">{{formatDate recipe.date 'MMMM Do YYYY'}}</span>
       {{{recipe.body}}}
     </div>
   </div>
@@ -12,7 +12,7 @@
   {{#if recipe.allowComments}}
   <div class="card">
     <div class="form-group">
-      <span class="card-title">Comments</span>
+      <span class="card-label">Comments</span>
       {{#if user}}
       <form method="post" action="/recipes/comment/{{recipe.id}}">
         <div class="input-field">
@@ -43,7 +43,7 @@
 <div class="col s-12 ">
   <div class="card center-align">
     <div class="card-content">
-      <span class="card-title"> {{recipe.user.name}}</span>
+      <span class="card-label"> {{recipe.user.name}}</span>
 
     </div>
     <div class="card-action">

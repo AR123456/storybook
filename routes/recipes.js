@@ -5,10 +5,10 @@ const recipe = mongoose.model("recipes");
 const User = mongoose.model("users");
 const { ensureAuthenticated, ensureGuest } = require("../helpers/auth");
 
-// recipes Index-  find only things with a status of public
+// recipes Index-  find only things with a public of public
 router.get("/", (req, res) => {
   recipe
-    .find({ status: "public" })
+    .find({ public: "public" })
     // bring in the feilds from user collection
     .populate("user")
     // sorting by date desending -
@@ -31,7 +31,7 @@ router.get("/show/:id", (req, res) => {
     // so that user info can be accessed for commenter
     .populate("comments.commentUser")
     .then(recipe => {
-      if (recipe.status == "public") {
+      if (recipe.public == "public") {
         res.render("recipes/show", {
           recipe: recipe
         });
@@ -54,7 +54,7 @@ router.get("/show/:id", (req, res) => {
 // List recipes from a user
 router.get("/user/:userId", (req, res) => {
   recipe
-    .find({ user: req.params.userId, status: "public" })
+    .find({ user: req.params.userId, public: "public" })
     .populate("user")
     .then(recipes => {
       res.render("recipes/index", {
@@ -107,16 +107,23 @@ router.post("/", (req, res) => {
     allowComments = false;
   }
   // need body parserr in app.js for this
-  const newrecipe = {
-    title: req.body.title,
+  const newRecipe = {
+    public: req.body.public,
+    searchTerm: req.body.searchTerm,
+    userSearch: req.body.userSearch,
+    url: req.body.url,
+    label: req.body.label,
+    image: req.body.image,
+    ingredients: req.body.ingredients,
+    directions: req.body.directions,
+    nutrition: req.body.nutrition,
     body: req.body.body,
-    status: req.body.status,
     allowComments: allowComments,
     user: req.user.id
   };
 
   // Create recipe
-  new recipe(newrecipe)
+  new recipe(newRecipe)
     .save()
     // take care of the promise
     .then(recipe => {
@@ -144,9 +151,16 @@ router.put("/:id", (req, res) => {
       }
 
       // Set New values coming in from the form
-      recipe.title = req.body.title;
+      recipe.public = req.body.public;
+      recipe.searchTerm = req.body.searchTerm;
+      recipe.userSearch = req.body.userSearch;
+      recipe.url = req.body.url;
+      recipe.label = req.body.label;
+      recipe.image = req.body.image;
+      recipe.ingredients = req.body.ingredients;
+      recipe.directions = req.body.directions;
+      recipe.nutrition = req.body.nutrition;
       recipe.body = req.body.body;
-      recipe.status = req.body.status;
       recipe.allowComments = allowComments;
       // now call the save on the new values
       recipe

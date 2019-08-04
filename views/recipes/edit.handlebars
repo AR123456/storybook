@@ -5,21 +5,21 @@
   <input type="hidden" name="_method" value="PUT">
   <div class="row">
     <div class="input-field">
-      <input type="text" name="title" value="{{recipe.title}}">
-      <label for="title">Title</label>
+      <input type="text" name="label" value="{{recipe.label}}">
+      <label for="label">label</label>
     </div>
   </div>
 
   <div class="form-group">
     <div class="input-field">
-      <select name="status">
-        {{#select recipe.status}}
+      <select name="public">
+        {{#select recipe.public}}
         <option value="public" selected>Public</option>
         <option value="private">Private</option>
         <option value="unpublished">Unpublished</option>
         {{/select}}
       </select>
-      <label for="status">Status</label>
+      <label for="public">public</label>
     </div>
   </div>
   <p>

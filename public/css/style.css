@@ -41,7 +41,7 @@ body {
 .card-text {
   height: 120px;
 }
-.dash-status {
+.dash-public {
   text-transform: capitalize;
 }
 #delete-form {
