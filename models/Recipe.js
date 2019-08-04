@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 // Create Shema
 //TODO wiht implementation of spin recipe this will be the recipe model
-const StorySchema = new Schema({
+const RecipeSchema = new Schema({
   title: {
     type: String,
     required: true
@@ -37,7 +37,7 @@ const StorySchema = new Schema({
       }
     }
   ],
-  // The user associated with the recipe / story
+  // The user associated with the recipe / recipe
   user: {
     type: Schema.Types.ObjectId,
     ref: "users"
@@ -48,5 +48,5 @@ const StorySchema = new Schema({
   }
 });
 
-// Create collection and add schema-  specifying ies preventsy the default being storys
-mongoose.model("stories", StorySchema, "stories");
+// Create collection and add schema-  specifying ies preventsy the default being recipes
+mongoose.model("recipes", RecipeSchema, "recipes");

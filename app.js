@@ -13,11 +13,11 @@ const mongoose = require("mongoose");
 const app = express();
 // Load Models
 require("./models/User");
-require("./models/Story");
+require("./models/Recipe");
 // Load Routes
 const index = require("./routes/index");
 const auth = require("./routes/auth");
-const stories = require("./routes/stories");
+const recipes = require("./routes/recipes");
 const users = require("./routes/users");
 // Passport Config
 require("./config/passport")(passport);
@@ -81,7 +81,7 @@ app.use(
 // Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
-// for alterts messages
+// for alters messages
 app.use(flash());
 // Global variables- for when flash is implemented
 app.use(function(req, res, next) {
@@ -91,7 +91,7 @@ app.use(function(req, res, next) {
   res.locals.user = req.user || null;
   next();
 });
-// Set global user variable so that it is in app.js vars can use to decide which stories to show user
+// Set global user variable so that it is in app.js vars
 app.use((req, res, next) => {
   res.locals.user = req.user || null;
   next();
@@ -104,7 +104,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", index);
 app.use("/auth", auth);
 app.use("/users", users);
-app.use("/stories", stories);
+app.use("/recipes", recipes);
 
 const port = process.env.PORT || 5000;
 

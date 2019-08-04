@@ -1,6 +1,6 @@
-<h1>Stories</h1>
+<h1>recipes</h1>
 <div class="row">
-  {{#each stories}}
+  {{#each recipes}}
   <div class="col s-12 ">
     <div class="card">
       <div class="card-body">
@@ -13,15 +13,15 @@
         <h5>{{title}}</h5>
         <p class="card-text">{{stripTags (truncate body 150)}}</p>
         <div>
-          <a href="/stories/user/{{user.id}}">Recipe Added By {{user.name}} </a>
+          <a href="/recipes/user/{{user.id}}">Recipe Added By {{user.name}} </a>
         </div>
       </div>
       <div class="card-action center-align">
-        <a class=" btn btn-outline-primary btn-sm" href="/stories/show/{{id}}">See Recipe</a>
+        <a class=" btn btn-outline-primary btn-sm" href="/recipes/show/{{id}}">See Recipe</a>
       </div>
     </div>
   </div>
   {{else}}
-  <p>No stories found</p>
+  <p>No recipes found</p>
   {{/each}}
 </div>

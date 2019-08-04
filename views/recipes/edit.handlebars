@@ -1,11 +1,11 @@
-<h1>Edit Story</h1>
+<h1>Edit Recipe</h1>
 
-<form action="/stories/{{story.id}}?_method=PUT" method="post" class="col s12">
+<form action="/recipes/{{recipe.id}}?_method=PUT" method="post" class="col s12">
   {{!-- need the hidden input feild with the methond overide _method  --}}
   <input type="hidden" name="_method" value="PUT">
   <div class="row">
     <div class="input-field">
-      <input type="text" name="title" value="{{story.title}}">
+      <input type="text" name="title" value="{{recipe.title}}">
       <label for="title">Title</label>
     </div>
   </div>
@@ -13,7 +13,7 @@
   <div class="form-group">
     <div class="input-field">
       <select name="status">
-        {{#select story.status}}
+        {{#select recipe.status}}
         <option value="public" selected>Public</option>
         <option value="private">Private</option>
         <option value="unpublished">Unpublished</option>
@@ -25,14 +25,14 @@
   <p>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" name="allowComments" class="filled-in" id="filled-in-box"
-        {{#if story.allowComments}} checked="checked" {{/if}}>
+        {{#if recipe.allowComments}} checked="checked" {{/if}}>
       <label for="filled-in-box">Allow Comments</label>
     </div>
   </p>
   <div class="form-group">
     <div class="input-field">
-      <h5>Tell Us Your Story:</h5>
-      <textarea name="body">{{story.body}}</textarea>
+      <h5>Tell Us Your Recipe:</h5>
+      <textarea name="body">{{recipe.body}}</textarea>
     </div>
   </div>
 

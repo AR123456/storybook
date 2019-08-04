@@ -1,20 +1,20 @@
 <div class="col s-12">
-  <h3>{{story.title}}
-    <small>{{{editIcon story.user.id user.id story.id false}}}</small>
+  <h3>{{recipe.title}}
+    <small>{{{editIcon recipe.user.id user.id recipe.id false}}}</small>
   </h3>
-  <div class="card story">
+  <div class="card recipe">
     <div class="card-content">
-      <span class="card-title">{{formatDate story.date 'MMMM Do YYYY'}}</span>
-      {{{story.body}}}
+      <span class="card-title">{{formatDate recipe.date 'MMMM Do YYYY'}}</span>
+      {{{recipe.body}}}
     </div>
   </div>
 
-  {{#if story.allowComments}}
+  {{#if recipe.allowComments}}
   <div class="card">
     <div class="form-group">
       <span class="card-title">Comments</span>
       {{#if user}}
-      <form method="post" action="/stories/comment/{{story.id}}">
+      <form method="post" action="/recipes/comment/{{recipe.id}}">
         <div class="input-field">
           <textarea name="commentBody" class="form-control" class=""></textarea>
           <label> Add Your Comment</label>
@@ -27,12 +27,12 @@
     </div>
   </div>
   <h4> User comments about this recipe </h4>
-  {{#each story.comments}}
+  {{#each recipe.comments}}
 
   <div class="card">
     <div class="card-content">
       <h5>{{commentBody}}</h5>
-      <small> <a href="/stories/user/{{commentUser.id}}">
+      <small> <a href="/recipes/user/{{commentUser.id}}">
           {{commentUser.name}}
         </a>Posted: {{formatDate commentDate 'MMMM Do YYYY'}}</small>
     </div>
@@ -43,11 +43,11 @@
 <div class="col s-12 ">
   <div class="card center-align">
     <div class="card-content">
-      <span class="card-title"> {{story.user.name}}</span>
+      <span class="card-title"> {{recipe.user.name}}</span>
 
     </div>
     <div class="card-action">
-      <a href="/stories/user/{{story.user.id}}">See More Recipes Added By {{story.user.name}}</a>
+      <a href="/recipes/user/{{recipe.user.id}}">See More Recipes Added By {{recipe.user.name}}</a>
     </div>
   </div>
 </div>
