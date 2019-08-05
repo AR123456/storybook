@@ -9,16 +9,22 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const mongoose = require("mongoose");
+// new consts added for scrape
+const cheerio = require("cheerio");
+const request = require("request");
+///
 
 const app = express();
 // Load Models
 require("./models/User");
 require("./models/Recipe");
+// require("./models/Scrape");
 // Load Routes
 const index = require("./routes/index");
 const auth = require("./routes/auth");
 const recipes = require("./routes/recipes");
 const users = require("./routes/users");
+const scrape = require("./routes/scrape");
 // Passport Config
 require("./config/passport")(passport);
 // Load Keys
@@ -105,6 +111,12 @@ app.use("/", index);
 app.use("/auth", auth);
 app.use("/users", users);
 app.use("/recipes", recipes);
+app.use("/scrape", scrape);
+
+// this works
+// app.get("/scrape", function(req, res) {
+//   res.send("hello world");
+// });
 
 const port = process.env.PORT || 5000;
 

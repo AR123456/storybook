@@ -19,5 +19,8 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
 router.get("/about", (req, res) => {
   res.render("index/about");
 });
-
+//this works
+// router.get("/scrape", (req, res) => {
+//   res.send("you hit the scrape ");
+// });
 module.exports = router;
