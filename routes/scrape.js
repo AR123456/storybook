@@ -16,10 +16,10 @@ const request = require("request");
 // });
 ///// scrape form allrecipies
 // 234534   245948 238585 107421 229872 240333-kf 241564-kf 111361-kf  67952 -veg - united states  235449-veg united states
-// 239498- kf , United States   178993 kf , United States
+// 239498- kf , United States   178993 kf , United States  , 51856-philly-cheesesteak, 235473 garbonzo Farinata
 // Making a request from the allrecipes web page
 router.get("/scrape", function(req, res) {
-  request("https://www.allrecipes.com/recipe/178993/", function(
+  request("https://www.allrecipes.com/recipe/51856/", function(
     error,
     response,
     html
