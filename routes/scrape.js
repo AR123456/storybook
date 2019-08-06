@@ -26,10 +26,12 @@ router.get("/scrape", function(req, res) {
   ) {
     // Load the body of the HTML into cheerio
     var $ = cheerio.load(html);
-    var recipe = [];
+    var recipeScrape = [];
     var public = "public";
     var searchTerm = "United States";
     var userSearch = "Kid Friedly";
+    var allowComments = "on";
+
     /// Recipe URL
     $(".recipe-container-outer").each(function(i, element) {
       // all of the kids
@@ -66,30 +68,7 @@ router.get("/scrape", function(req, res) {
 
       // If this found element had both a title and a link
       if (url) {
-        // // Insert the data in the scrapedData db
-        // db.recipes.insert(
-        //   {
-        //     public: public,
-        //     searchTerm: searchTerm,
-        //     userSearch: userSearch,
-        //     url: url,
-        //     label: label,
-        //     image: image,
-        //     ingredients: ingredients,
-        //     directions: directions,
-        //     nutrition: nutrition
-        //   },
-        //   function(err, inserted) {
-        //     if (err) {
-        //       // Log the error if one is encountered during the query
-        //       console.log(err);
-        //     } else {
-        //       // Otherwise, log the inserted data
-        //       console.log(inserted);
-        //     }
-        //   }
-        // );
-        recipe.push(
+        recipeScrape.push(
           {
             public: public,
             searchTerm: searchTerm,
@@ -99,7 +78,8 @@ router.get("/scrape", function(req, res) {
             image: image,
             ingredients: ingredients,
             directions: directions,
-            nutrition: nutrition
+            nutrition: nutrition,
+            allowComments: allowComments
           },
           function(err, inserted) {
             if (err) {
@@ -113,54 +93,40 @@ router.get("/scrape", function(req, res) {
         );
       }
     });
-    console.log(recipe);
+    console.log("This is the recipe scrape: ", recipeScrape);
     // Process Add recipe
-    router.post("/", (req, res) => {
-      let allowComments;
 
-      if (req.body.allowComments) {
-        allowComments = true;
-      } else {
-        allowComments = false;
-      }
-      // need body parserr in app.js for this
-      const newRecipe = {
-        public: req.body.public,
-        searchTerm: req.body.searchTerm,
-        userSearch: req.body.userSearch,
-        url: req.body.url,
-        label: req.body.label,
-        image: req.body.image,
-        ingredients: req.body.ingredients,
-        directions: req.body.directions,
-        nutrition: req.body.nutrition,
-        body: req.body.body,
-        allowComments: allowComments,
-        user: req.user.id
-      };
+    // let allowComments;
 
-      // Create recipe
-      new recipe(newRecipe)
-        .save()
-        // take care of the promise
-        .then(recipe => {
-          res.redirect(`/recipes/show/${recipe.id}`);
-        });
-    });
-    // Recipe.create(recipe)
-    //   .then(function(dbExample) {
-    //     // If saved successfully, print the new Example document to the console
-    //     console.log(dbExample);
-    //     res.json(dbExample);
-    //   })
-    //   .catch(function(err) {
-    //     // If an error occurs, log the error message
-    //     console.log(err.message);
-    //   });
-    // console.log(recipe);
-    // strrecipe = JSON.stringify(recipe);
-    // recipeData = JSON.parse(strrecipe);
-    // console.log(recipeData);
+    if (req.body.allowComments) {
+      allowComments = true;
+    } else {
+      allowComments = false;
+    }
+    // need body parserr in app.js for this
+    const newRecipe = {
+      public: req.body.public,
+      searchTerm: req.body.searchTerm,
+      userSearch: req.body.userSearch,
+      url: req.body.url,
+      label: req.body.label,
+      image: req.body.image,
+      ingredients: req.body.ingredients,
+      directions: req.body.directions,
+      nutrition: req.body.nutrition,
+      body: req.body.body,
+      allowComments: allowComments
+      // user: req.user.id
+    };
+
+    // Create recipe
+    new recipe(newRecipe)
+      .save()
+      // take care of the promise
+      .then(recipe => {
+        // this is a es6 default promise
+        res.redirect(`/recipes/show/${recipe.id}`);
+      });
   });
 
   res.send("Scrape Complete");
