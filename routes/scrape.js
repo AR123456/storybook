@@ -19,7 +19,7 @@ const request = require("request");
 // 239498- kf , United States   178993 kf , United States  , 51856-philly-cheesesteak, 235473 garbonzo Farinata
 // Making a request from the allrecipes web page
 router.get("/scrape", function(req, res) {
-  request("https://www.allrecipes.com/recipe/51856/", function(
+  request("https://www.allrecipes.com/recipe/178993/", function(
     error,
     response,
     html
