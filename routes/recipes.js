@@ -8,7 +8,7 @@ const { ensureAuthenticated, ensureGuest } = require("../helpers/auth");
 // recipes Index-  find only things with a public of public
 router.get("/", (req, res) => {
   recipe
-    .find({ public: "public" })
+    .find({ status: "public" })
     // bring in the feilds from user collection
     .populate("user")
     // sorting by date desending -
@@ -31,7 +31,7 @@ router.get("/show/:id", (req, res) => {
     // so that user info can be accessed for commenter
     .populate("comments.commentUser")
     .then(recipe => {
-      if (recipe.public == "public") {
+      if (recipe.status == "public") {
         res.render("recipes/show", {
           recipe: recipe
         });
@@ -54,7 +54,7 @@ router.get("/show/:id", (req, res) => {
 // List recipes from a user
 router.get("/user/:userId", (req, res) => {
   recipe
-    .find({ user: req.params.userId, public: "public" })
+    .find({ user: req.params.userId, status: "public" })
     .populate("user")
     .then(recipes => {
       res.render("recipes/index", {
@@ -108,7 +108,7 @@ router.post("/", (req, res) => {
   }
   // need body parserr in app.js for this
   const newRecipe = {
-    public: req.body.public,
+    status: req.body.status,
     searchTerm: req.body.searchTerm,
     userSearch: req.body.userSearch,
     url: req.body.url,
@@ -151,7 +151,7 @@ router.put("/:id", (req, res) => {
       }
 
       // Set New values coming in from the form
-      recipe.public = req.body.public;
+      recipe.status = req.body.status;
       recipe.searchTerm = req.body.searchTerm;
       recipe.userSearch = req.body.userSearch;
       recipe.url = req.body.url;

@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 // Create Shema
 //TODO wiht implementation of spin recipe this will be the recipe model
 const RecipeSchema = new Schema({
-  public: {
+  status: {
     type: String,
     default: "public"
   },
