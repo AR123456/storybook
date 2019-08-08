@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const recipe = mongoose.model("recipes");
-const User = mongoose.model("users");
+const user = mongoose.model("users");
 const { ensureAuthenticated, ensureGuest } = require("../helpers/auth");
 
 // recipes Index-  find only things with a public of public
@@ -135,10 +135,10 @@ router.post("/", (req, res) => {
 // finding the recipe
 router.put("/:id", (req, res) => {
   // just fining one - by matching the recipe ID to the request params id from the url
-  recipe
-    .findOne({
-      _id: req.params.id
-    })
+  // recipe
+  Recipe.findOne({
+    _id: req.params.id
+  })
     // get the recipe back then
     .then(recipe => {
       // decide if allow comments is going to be true or false
@@ -163,6 +163,7 @@ router.put("/:id", (req, res) => {
       recipe.body = req.body.body;
       recipe.allowComments = allowComments;
       // now call the save on the new values
+
       recipe
         .save()
         // the new updaed recipe then redirect to the dashboard
@@ -181,6 +182,7 @@ router.delete("/:id", ensureAuthenticated, (req, res) => {
 
 // Add Comment
 router.post("/comment/:id", (req, res) => {
+  // recipe
   recipe
     .findOne({
       _id: req.params.id

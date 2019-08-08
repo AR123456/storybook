@@ -22,24 +22,24 @@ const RecipeSchema = new Schema({
     }
   ],
   url: {
-    type: String,
-    trim: true
+    type: String
+    // trim: true
     // why is this unique not working.........
     // unique: true
     // required: "URL is required"
   },
   label: {
-    type: String,
-    trim: true
+    type: String
+    // trim: true
     // required: "Title is required"
   },
   image: {
-    type: String,
-    trim: true
+    type: String
+    // trim: true
   },
   ingredients: {
-    type: String,
-    trim: true
+    type: String
+    // trim: true
   },
   directions: {
     type: String
@@ -61,8 +61,8 @@ const RecipeSchema = new Schema({
   comments: [
     {
       commentBody: {
-        type: String
-        // required: true
+        type: String,
+        required: true
       },
       commentDate: {
         type: Date,
