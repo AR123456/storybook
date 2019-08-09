@@ -27,11 +27,11 @@ router.get("/scrape", function(req, res) {
     // Load the body of the HTML into cheerio
     var $ = cheerio.load(html);
     var recipeScrape = [];
-    var public = "public";
+    var status = "public";
     var searchTerm = "United States";
     var userSearch = "Kid Friedly";
     var allowComments = "on";
-
+    var user = "";
     /// Recipe URL
     $(".recipe-container-outer").each(function(i, element) {
       // all of the kids
@@ -70,7 +70,7 @@ router.get("/scrape", function(req, res) {
       if (url) {
         recipeScrape.push(
           {
-            public: public,
+            status: status,
             searchTerm: searchTerm,
             userSearch: userSearch,
             url: url,
@@ -79,7 +79,8 @@ router.get("/scrape", function(req, res) {
             ingredients: ingredients,
             directions: directions,
             nutrition: nutrition,
-            allowComments: allowComments
+            allowComments: allowComments,
+            user: user
           },
           function(err, inserted) {
             if (err) {
@@ -105,7 +106,7 @@ router.get("/scrape", function(req, res) {
     }
     // need body parserr in app.js for this
     const newRecipe = {
-      public: req.body.public,
+      status: req.body.public,
       searchTerm: req.body.searchTerm,
       userSearch: req.body.userSearch,
       url: req.body.url,
@@ -115,8 +116,8 @@ router.get("/scrape", function(req, res) {
       directions: req.body.directions,
       nutrition: req.body.nutrition,
       body: req.body.body,
-      allowComments: allowComments
-      // user: req.user.id
+      allowComments: allowComments,
+      user: user
     };
 
     // Create recipe
