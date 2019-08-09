@@ -1,14 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const recipe = mongoose.model("recipes");
+const Recipe = mongoose.model("recipes");
 const user = mongoose.model("users");
 const { ensureAuthenticated, ensureGuest } = require("../helpers/auth");
 
 // recipes Index-  find only things with a public of public
 router.get("/", (req, res) => {
-  recipe
-    .find({ status: "public" })
+  Recipe.find({ status: "public" })
     // bring in the feilds from user collection
     .populate("user")
     // sorting by date desending -
@@ -23,10 +22,9 @@ router.get("/", (req, res) => {
 
 // Show Single recipe
 router.get("/show/:id", (req, res) => {
-  recipe
-    .findOne({
-      _id: req.params.id
-    })
+  Recipe.findOne({
+    _id: req.params.id
+  })
     .populate("user")
     // so that user info can be accessed for commenter
     .populate("comments.commentUser")
@@ -53,8 +51,7 @@ router.get("/show/:id", (req, res) => {
 
 // List recipes from a user
 router.get("/user/:userId", (req, res) => {
-  recipe
-    .find({ user: req.params.userId, status: "public" })
+  Recipe.find({ user: req.params.userId, status: "public" })
     .populate("user")
     .then(recipes => {
       res.render("recipes/index", {
@@ -65,8 +62,7 @@ router.get("/user/:userId", (req, res) => {
 
 // Logged in users recipes
 router.get("/my", ensureAuthenticated, (req, res) => {
-  recipe
-    .find({ user: req.user.id })
+  Recipe.find({ user: req.user.id })
     .populate("user")
     .then(recipes => {
       res.render("recipes/index", {
@@ -82,19 +78,17 @@ router.get("/add", ensureAuthenticated, (req, res) => {
 
 // Edit recipe Form
 router.get("/edit/:id", ensureAuthenticated, (req, res) => {
-  recipe
-    .findOne({
-      _id: req.params.id
-    })
-    .then(recipe => {
-      if (recipe.user != req.user.id) {
-        res.redirect("/recipes");
-      } else {
-        res.render("recipes/edit", {
-          recipe: recipe
-        });
-      }
-    });
+  Recipe.findOne({
+    _id: req.params.id
+  }).then(recipe => {
+    if (recipe.user != req.user.id) {
+      res.redirect("/recipes");
+    } else {
+      res.render("recipes/edit", {
+        recipe: recipe
+      });
+    }
+  });
 });
 
 // Process Add recipe
@@ -123,7 +117,7 @@ router.post("/", (req, res) => {
   };
 
   // Create recipe
-  new recipe(newRecipe)
+  new Recipe(newRecipe)
     .save()
     // take care of the promise
     .then(recipe => {
@@ -175,7 +169,7 @@ router.put("/:id", (req, res) => {
 
 // Delete recipe
 router.delete("/:id", ensureAuthenticated, (req, res) => {
-  recipe.remove({ _id: req.params.id }).then(() => {
+  Recipe.remove({ _id: req.params.id }).then(() => {
     res.redirect("/dashboard");
   });
 });
@@ -183,23 +177,21 @@ router.delete("/:id", ensureAuthenticated, (req, res) => {
 // Add Comment
 router.post("/comment/:id", (req, res) => {
   // recipe
-  recipe
-    .findOne({
-      _id: req.params.id
-    })
-    .then(recipe => {
-      const newComment = {
-        commentBody: req.body.commentBody,
-        commentUser: req.user.id
-      };
+  Recipe.findOne({
+    _id: req.params.id
+  }).then(recipe => {
+    const newComment = {
+      commentBody: req.body.commentBody,
+      commentUser: req.user.id
+    };
 
-      // Add to comments array - unshift adds to the beging of the comments array
-      recipe.comments.unshift(newComment);
+    // Add to comments array - unshift adds to the beging of the comments array
+    recipe.comments.unshift(newComment);
 
-      recipe.save().then(recipe => {
-        res.redirect(`/recipes/show/${recipe.id}`);
-      });
+    recipe.save().then(recipe => {
+      res.redirect(`/recipes/show/${recipe.id}`);
     });
+  });
 });
 
 module.exports = router;
