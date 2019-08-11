@@ -4,7 +4,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const recipe = mongoose.model("recipes");
 // const scrape = mongoose.model("scrape");
-const User = mongoose.model("users");
+const user = mongoose.model("users");
 const { ensureAuthenticated, ensureGuest } = require("../helpers/auth");
 // packages needed for scrape
 const cheerio = require("cheerio");
@@ -31,7 +31,8 @@ router.get("/scrape", function(req, res) {
     var searchTerm = "United States";
     var userSearch = "Kid Friedly";
     var allowComments = "on";
-    var user = "";
+
+    var user = { $oid: "5d47864b859f071048867194" };
     /// Recipe URL
     $(".recipe-container-outer").each(function(i, element) {
       // all of the kids
@@ -95,9 +96,10 @@ router.get("/scrape", function(req, res) {
       }
     });
     console.log("This is the recipe scrape: ", recipeScrape);
-    // Process Add recipe
-
-    // let allowComments;
+  });
+  // Process Add recipe
+  router.post("/", (req, res) => {
+    let allowComments;
 
     if (req.body.allowComments) {
       allowComments = true;
@@ -129,9 +131,43 @@ router.get("/scrape", function(req, res) {
         res.redirect(`/recipes/show/${recipe.id}`);
       });
   });
-
+  /////
   res.send("Scrape Complete");
 });
+//
+// // Process Add recipe
+// router.post("/", (req, res) => {
+//   let allowComments;
 
+//   if (req.body.allowComments) {
+//     allowComments = true;
+//   } else {
+//     allowComments = false;
+//   }
+//   // need body parserr in app.js for this
+//   const newRecipe = {
+//     status: req.body.public,
+//     searchTerm: req.body.searchTerm,
+//     userSearch: req.body.userSearch,
+//     url: req.body.url,
+//     label: req.body.label,
+//     image: req.body.image,
+//     ingredients: req.body.ingredients,
+//     directions: req.body.directions,
+//     nutrition: req.body.nutrition,
+//     body: req.body.body,
+//     allowComments: allowComments,
+//     user: user
+//   };
+
+//   // Create recipe
+//   new recipe(newRecipe)
+//     .save()
+//     // take care of the promise
+//     .then(recipe => {
+//       // this is a es6 default promise
+//       res.redirect(`/recipes/show/${recipe.id}`);
+//     });
+// });
 /////
 module.exports = router;
