@@ -5,7 +5,23 @@
   <div class="card recipe">
     <div class="card-content">
       <span class="card-label">{{formatDate recipe.date 'MMMM Do YYYY'}}</span>
-      {{{recipe.body}}}
+      <div> Search Term: {{{recipe.searchTerm}}}</div>
+      <div> Prefered recipe type: {{{recipe.userSearch}}}</div>
+      <div>Link to recipe: <a target="_blank" href="{{recipe.url}}">{{{recipe.url}}}</a></div>
+      <div> <a target="_blank" href="{{recipe.image}}">{{{recipe.image}}}</a></div>
+      <div>
+        <p>Ingredients:</p>{{{recipe.ingredients}}}
+      </div>
+      <br>
+      <div>
+        <p>Directions: </p> {{{recipe.directions}}}
+      </div>
+      <br>
+      <div>
+        <p>Nutritional Information: </p> {{{recipe.nutrition}}}
+      </div>
+      <br>
+
     </div>
   </div>
 
