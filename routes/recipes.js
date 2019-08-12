@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const Recipe = mongoose.model("recipes");
-const user = mongoose.model("users");
+const recipe = mongoose.model("recipes");
+const User = mongoose.model("users");
 const { ensureAuthenticated, ensureGuest } = require("../helpers/auth");
 
 // recipes Index-  find only things with a public of public
 router.get("/", (req, res) => {
-  Recipe.find({ status: "public" })
+  recipe
+    .find({ public: "public" })
     // bring in the feilds from user collection
     .populate("user")
     // sorting by date desending -
@@ -22,14 +23,15 @@ router.get("/", (req, res) => {
 
 // Show Single recipe
 router.get("/show/:id", (req, res) => {
-  Recipe.findOne({
-    _id: req.params.id
-  })
+  recipe
+    .findOne({
+      _id: req.params.id
+    })
     .populate("user")
     // so that user info can be accessed for commenter
     .populate("comments.commentUser")
     .then(recipe => {
-      if (recipe.status == "public") {
+      if (recipe.public == "public") {
         res.render("recipes/show", {
           recipe: recipe
         });
@@ -51,7 +53,8 @@ router.get("/show/:id", (req, res) => {
 
 // List recipes from a user
 router.get("/user/:userId", (req, res) => {
-  Recipe.find({ user: req.params.userId, status: "public" })
+  recipe
+    .find({ user: req.params.userId, public: "public" })
     .populate("user")
     .then(recipes => {
       res.render("recipes/index", {
@@ -62,7 +65,8 @@ router.get("/user/:userId", (req, res) => {
 
 // Logged in users recipes
 router.get("/my", ensureAuthenticated, (req, res) => {
-  Recipe.find({ user: req.user.id })
+  recipe
+    .find({ user: req.user.id })
     .populate("user")
     .then(recipes => {
       res.render("recipes/index", {
@@ -78,17 +82,19 @@ router.get("/add", ensureAuthenticated, (req, res) => {
 
 // Edit recipe Form
 router.get("/edit/:id", ensureAuthenticated, (req, res) => {
-  Recipe.findOne({
-    _id: req.params.id
-  }).then(recipe => {
-    if (recipe.user != req.user.id) {
-      res.redirect("/recipes");
-    } else {
-      res.render("recipes/edit", {
-        recipe: recipe
-      });
-    }
-  });
+  recipe
+    .findOne({
+      _id: req.params.id
+    })
+    .then(recipe => {
+      if (recipe.user != req.user.id) {
+        res.redirect("/recipes");
+      } else {
+        res.render("recipes/edit", {
+          recipe: recipe
+        });
+      }
+    });
 });
 
 // Process Add recipe
@@ -102,7 +108,7 @@ router.post("/", (req, res) => {
   }
   // need body parserr in app.js for this
   const newRecipe = {
-    status: req.body.status,
+    public: req.body.public,
     searchTerm: req.body.searchTerm,
     userSearch: req.body.userSearch,
     url: req.body.url,
@@ -117,7 +123,7 @@ router.post("/", (req, res) => {
   };
 
   // Create recipe
-  new Recipe(newRecipe)
+  new recipe(newRecipe)
     .save()
     // take care of the promise
     .then(recipe => {
@@ -129,10 +135,10 @@ router.post("/", (req, res) => {
 // finding the recipe
 router.put("/:id", (req, res) => {
   // just fining one - by matching the recipe ID to the request params id from the url
-  // recipe
-  Recipe.findOne({
-    _id: req.params.id
-  })
+  recipe
+    .findOne({
+      _id: req.params.id
+    })
     // get the recipe back then
     .then(recipe => {
       // decide if allow comments is going to be true or false
@@ -145,7 +151,7 @@ router.put("/:id", (req, res) => {
       }
 
       // Set New values coming in from the form
-      recipe.status = req.body.status;
+      recipe.public = req.body.public;
       recipe.searchTerm = req.body.searchTerm;
       recipe.userSearch = req.body.userSearch;
       recipe.url = req.body.url;
@@ -157,7 +163,6 @@ router.put("/:id", (req, res) => {
       recipe.body = req.body.body;
       recipe.allowComments = allowComments;
       // now call the save on the new values
-
       recipe
         .save()
         // the new updaed recipe then redirect to the dashboard
@@ -169,29 +174,30 @@ router.put("/:id", (req, res) => {
 
 // Delete recipe
 router.delete("/:id", ensureAuthenticated, (req, res) => {
-  Recipe.remove({ _id: req.params.id }).then(() => {
+  recipe.remove({ _id: req.params.id }).then(() => {
     res.redirect("/dashboard");
   });
 });
 
 // Add Comment
 router.post("/comment/:id", (req, res) => {
-  // recipe
-  Recipe.findOne({
-    _id: req.params.id
-  }).then(recipe => {
-    const newComment = {
-      commentBody: req.body.commentBody,
-      commentUser: req.user.id
-    };
+  recipe
+    .findOne({
+      _id: req.params.id
+    })
+    .then(recipe => {
+      const newComment = {
+        commentBody: req.body.commentBody,
+        commentUser: req.user.id
+      };
 
-    // Add to comments array - unshift adds to the beging of the comments array
-    recipe.comments.unshift(newComment);
+      // Add to comments array - unshift adds to the beging of the comments array
+      recipe.comments.unshift(newComment);
 
-    recipe.save().then(recipe => {
-      res.redirect(`/recipes/show/${recipe.id}`);
+      recipe.save().then(recipe => {
+        res.redirect(`/recipes/show/${recipe.id}`);
+      });
     });
-  });
 });
 
 module.exports = router;

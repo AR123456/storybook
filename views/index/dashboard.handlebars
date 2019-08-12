@@ -3,7 +3,6 @@
   <h4>Your Recipes</h4>
   {{#if user}}
   {{> _add-btn}}
-  {{> _scrape-btn}}
   {{/if}}
 </div>
 {{#if recipes}}
@@ -12,7 +11,7 @@
     <tr>
       <th>label</th>
       <th>Date</th>
-      <th>Status</th>
+      <th>public</th>
       <th></th>
     </tr>
   </thead>
@@ -21,7 +20,7 @@
     <tr>
       <td><a href="/recipes/show/{{id}}">{{label}}</a></td>
       <td>{{formatDate data 'MMMM do YYYY'}}</td>
-      <td><span class="dash-status">{{status}}</span></td>
+      <td><span class="dash-public">{{public}}</span></td>
       <td>
         <a class="btn btn-outline-primary btn-sm" href="/recipes/edit/{{id}}"><i class="fas fa-pencil-alt"></i> Edit</a>
         {{!-- method overide to take care of delete from the form  --}}

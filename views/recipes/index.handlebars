@@ -11,8 +11,7 @@
       </div>
       <div class="card-label">
         <h5>{{label}}</h5>
-        {{!-- <p class="card-text">{{stripTags (truncate body 150)}}</p> --}}
-        <p class="card-text"></p>
+        <p class="card-text">{{stripTags (truncate body 150)}}</p>
         <div>
           <a href="/recipes/user/{{user.id}}">Recipe Added By {{user.name}} </a>
         </div>
